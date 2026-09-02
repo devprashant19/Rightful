@@ -1,0 +1,30 @@
+{
+  "name": "rightful",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "smoke": "node scripts/smoke.mjs",
+    "audit:secrets": "node scripts/audit-bundle.mjs",
+    "test": "node scripts/test-unit.mjs",
+    "verify:all": "node scripts/verify-all.mjs"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "unpdf": "^0.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.1.0",
+    "typescript": "^5.7.0"
+  }
+}
+
