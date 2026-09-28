@@ -1,0 +1,117 @@
+.sourcesSection {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-rule);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.sourcesSection:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 8px;
+}
+
+.sectionHeader h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.sourceCount {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.sourceList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sourceCard {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  padding: 10px 14px;
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.sourceCard:hover {
+  transform: translateX(4px);
+  border-color: var(--carbon-blue);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.sourceCard.highlighted {
+  border-color: var(--carbon-blue);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+  transform: translateY(-1px);
+}
+
+.sourceTop {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.sourceChip {
+  background-color: var(--ink-primary);
+  color: var(--bg-surface);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+.sourceTitle {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--carbon-blue);
+  text-decoration: none;
+}
+
+.sourceTitle:hover {
+  text-decoration: underline;
+}
+
+.badgeRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.officialBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--stamp-green);
+  background-color: var(--stamp-green-bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.thirdPartyBadge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--stamp-amber);
+  background-color: var(--stamp-amber-bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.liveBadge {
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+
