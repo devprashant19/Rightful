@@ -1,0 +1,125 @@
+.strengthCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-rule);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.strengthCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.meterRow {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+
+.scoreCircle {
+  display: flex;
+  align-items: baseline;
+  flex-shrink: 0;
+}
+
+.scoreNumber {
+  font-size: 2.6rem;
+  font-weight: 800;
+  line-height: 1;
+  font-family: var(--font-mono);
+  transition: color 0.3s ease;
+}
+
+.scoreMax {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink-faint);
+  margin-left: 2px;
+}
+
+.verdictInfo {
+  flex: 1;
+}
+
+.verdictTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  letter-spacing: 0.05em;
+}
+
+.verdictText {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 2px 0 4px 0;
+  transition: color 0.3s ease;
+}
+
+.verdictDesc {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  line-height: 1.4;
+}
+
+.scoreHigh {
+  color: var(--stamp-green);
+}
+
+.scoreMid {
+  color: var(--stamp-amber);
+}
+
+.scoreLow {
+  color: var(--stamp-red);
+}
+
+.progressBarBg {
+  width: 100%;
+  height: 8px;
+  background-color: var(--bg-subtle);
+  border-radius: 9999px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.85s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
+  position: relative;
+}
+
+.progressBarFill::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2.2s infinite;
+}
+
+.progressBarFill.scoreHigh {
+  background-color: var(--stamp-green);
+}
+
+.progressBarFill.scoreMid {
+  background-color: var(--stamp-amber);
+}
+
+.progressBarFill.scoreLow {
+  background-color: var(--stamp-red);
+}
+
