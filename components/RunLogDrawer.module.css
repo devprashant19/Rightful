@@ -1,0 +1,150 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(19, 27, 39, 0.6);
+  backdrop-filter: blur(2px);
+  z-index: 1000;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.drawer {
+  width: 100%;
+  max-width: 620px;
+  height: 100%;
+  background-color: var(--bg-surface);
+  border-left: 1px solid var(--border-rule);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer {
+    animation: none;
+  }
+}
+
+.drawerHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 12px;
+}
+
+.drawerHeader h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.drawerSub {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--ink-muted);
+  cursor: pointer;
+  padding: 4px;
+}
+
+.closeBtn:hover {
+  color: var(--ink-primary);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-rule);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+
+.summaryItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.summaryLabel {
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.summaryValue {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  font-family: var(--font-mono);
+}
+
+.tableWrapper {
+  flex: 1;
+  overflow-x: auto;
+}
+
+.logTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.logTable th {
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border-rule);
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.logTable td {
+  padding: 10px;
+  border-bottom: 1px solid var(--border-rule);
+}
+
+.stepBadge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  background-color: var(--bg-subtle);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border-rule);
+}
+
+.modelName {
+  font-size: 0.78rem;
+  color: var(--ink-primary);
+  word-break: break-all;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.footerNote {
+  margin-top: 20px;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
