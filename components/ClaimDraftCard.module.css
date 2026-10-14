@@ -1,0 +1,124 @@
+.draftCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-rule);
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.draftCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 8px;
+}
+
+.header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.subtext {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.copyBtn,
+.mailtoBtn {
+  background-color: var(--bg-surface);
+  color: var(--carbon-blue);
+  border: 1px solid var(--border-rule);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.copyBtn:hover,
+.mailtoBtn:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--carbon-blue);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.emailPreview {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+
+.subjectRow {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-size: 0.88rem;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 8px;
+}
+
+.label {
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.subjectText {
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.emailBody {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--ink-primary);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.missingChecklist {
+  margin-top: 16px;
+  background-color: var(--stamp-amber-bg);
+  border: 1px dashed var(--stamp-amber);
+  border-radius: 4px;
+  padding: 12px 14px;
+}
+
+.missingChecklist h4 {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--stamp-amber);
+  margin-bottom: 6px;
+}
+
+.missingChecklist ul {
+  list-style: none;
+  font-size: 0.8rem;
+  color: var(--ink-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
