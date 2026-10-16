@@ -1,0 +1,140 @@
+.clockCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-rule);
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              border-color 0.2s ease;
+}
+
+.clockCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.normal {
+  border-left: 5px solid var(--stamp-green);
+}
+
+.urgent {
+  border-left: 5px solid var(--stamp-amber);
+  background-color: var(--stamp-amber-bg);
+  animation: urgentPulse 3s infinite ease-in-out;
+}
+
+@keyframes urgentPulse {
+  0%, 100% {
+    box-shadow: 0 1px 3px rgba(183, 121, 31, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 14px rgba(183, 121, 31, 0.22);
+  }
+}
+
+.expired {
+  border-left: 5px solid var(--stamp-red);
+  background-color: var(--stamp-red-bg);
+}
+
+.clockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.countdownTitle {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.daysNumber {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--ink-primary);
+  line-height: 1;
+}
+
+.daysLabel {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+}
+
+.statusWord {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--stamp-red);
+  letter-spacing: 0.04em;
+}
+
+.calendarBtn {
+  background-color: var(--bg-surface);
+  color: var(--carbon-blue);
+  border: 1px solid var(--border-rule);
+  padding: 7px 14px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.calendarBtn:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--carbon-blue);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.metaRow {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.metaLabel {
+  color: var(--ink-muted);
+}
+
+.metaValue {
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.metaBasis {
+  color: var(--ink-faint);
+  font-size: 0.78rem;
+}
+
+.clockCardUnconfirmed {
+  background-color: var(--bg-subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+}
+
+.unconfirmedTag {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.unconfirmedText {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+
