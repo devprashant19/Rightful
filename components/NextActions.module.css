@@ -1,0 +1,105 @@
+.actionCard {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-rule);
+  border-radius: 6px;
+  padding: 18px 20px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-sm);
+}
+
+.actionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-rule);
+  padding-bottom: 8px;
+}
+
+.actionHeader h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.subtext {
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryActionBtn {
+  flex: 1;
+  min-width: 220px;
+  background: linear-gradient(135deg, var(--brown) 0%, #523122 100%);
+  color: #f6ede2;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 12px 18px;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(59, 33, 22, 0.25);
+}
+
+.primaryActionBtn:hover {
+  background: linear-gradient(135deg, #2a170e 0%, var(--brown) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(59, 33, 22, 0.4);
+}
+
+[data-theme='dark'] .primaryActionBtn {
+  background: linear-gradient(135deg, #d4612f 0%, #e2875c 100%);
+  color: #1c1410;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(212, 97, 47, 0.35);
+}
+
+[data-theme='dark'] .primaryActionBtn:hover {
+  background: linear-gradient(135deg, #e2875c 0%, #d4612f 100%);
+  box-shadow: 0 8px 22px rgba(212, 97, 47, 0.5);
+}
+
+.primaryActionBtn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.secondaryActionBtn {
+  flex: 1;
+  min-width: 220px;
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--border-rule);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 12px 18px;
+  border-radius: 6px;
+  text-align: center;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
+}
+
+.secondaryActionBtn:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.secondaryActionBtn:active {
+  transform: translateY(0) scale(0.99);
+}
+
+.disclaimer {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+  margin-top: 12px;
+  line-height: 1.35;
+}
+
