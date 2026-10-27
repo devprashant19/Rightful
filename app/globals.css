@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Fragment+Mono&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+
+:root {
+  /* Warm Luxury Editorial Palette (Inter Tight + Warm Alabaster) */
+  --bg-paper: #f6f0e7;
+  --bg-surface: rgba(255, 253, 249, 0.94);
+  --bg-subtle: #ece3d7;
+  --bg-card: rgba(250, 245, 238, 0.65);
+  --ink-primary: #2a1a12;
+  --ink-muted: #5b4a3f;
+  --ink-faint: #8d7b6f;
+  --border-rule: rgba(42, 26, 18, 0.12);
+  --border-strong: rgba(42, 26, 18, 0.28);
+
+  /* Warm Luxury Accents */
+  --brown: #3b2116;
+  --pill: #ece3d7;
+  --line: rgba(42, 26, 18, 0.08);
+  --glass: rgba(250, 245, 238, 0.55);
+  --glass-b: rgba(255, 255, 255, 0.65);
+  --r-xl: 34px;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-io: cubic-bezier(.65, 0, .35, 1);
+
+  --carbon-blue: #3b2116;
+  --carbon-hover: #2a1a12;
+  --focus-ring: rgba(59, 33, 22, 0.25);
+  --accent-gold: #d4612f;
+  --accent-gold-bg: rgba(212, 97, 47, 0.12);
+
+  /* Rubber Stamp Colors (Warm Grounded) */
+  --stamp-green: #2e7d4f;
+  --stamp-green-bg: #eaf5ee;
+  --stamp-red: #b3261e;
+  --stamp-red-bg: #fdf2f2;
+  --stamp-amber: #b7791f;
+  --stamp-amber-bg: #fdf8ee;
+
+  /* Typography */
+  --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'Fragment Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 3px rgba(42, 26, 18, 0.06);
+  --shadow-md: 0 4px 16px rgba(42, 26, 18, 0.08);
+  --shadow-lg: 0 12px 32px rgba(42, 26, 18, 0.12);
+  --shadow-stamp: 0 2px 4px rgba(42, 26, 18, 0.14);
+}
+
+[data-theme='dark'] {
+  --bg-paper: #1c1410;
+  --bg-surface: #241a14;
+  --bg-subtle: #2d211a;
+  --bg-card: rgba(40, 28, 22, 0.75);
+  --ink-primary: #f6f0e7;
+  --ink-muted: #d0c2b6;
+  --ink-faint: #9c8a7e;
+  --border-rule: rgba(246, 240, 231, 0.12);
+  --border-strong: rgba(246, 240, 231, 0.26);
+
+  --brown: #f6f0e7;
+  --pill: #2d211a;
+  --line: rgba(246, 240, 231, 0.10);
+  --glass: rgba(36, 26, 20, 0.65);
+  --glass-b: rgba(255, 255, 255, 0.15);
+
+  --carbon-blue: #e9a26a;
+  --carbon-hover: #f2c94c;
+  --focus-ring: rgba(233, 162, 106, 0.35);
+
+  --stamp-green: #48bb78;
+  --stamp-green-bg: rgba(46, 125, 79, 0.22);
+  --stamp-red: #f56565;
+  --stamp-red-bg: rgba(179, 38, 30, 0.22);
+  --stamp-amber: #ecc94b;
+  --stamp-amber-bg: rgba(183, 121, 31, 0.22);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 18px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, 0.6);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-paper);
+  color: var(--ink-primary);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Rubber Stamp Styling */
+.rubber-stamp {
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 2px solid currentColor;
+  border-radius: 3px;
+  box-shadow: var(--shadow-stamp);
+  transform: rotate(-2deg);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.rubber-stamp:hover {
+  transform: rotate(-1deg) scale(1.06) translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.16);
+}
+
+.rubber-stamp.supported {
+  color: var(--stamp-green);
+  background-color: var(--stamp-green-bg);
+  border-color: var(--stamp-green);
+}
+
+.rubber-stamp.ambiguous {
+  color: var(--stamp-amber);
+  background-color: var(--stamp-amber-bg);
+  border-color: var(--stamp-amber);
+  transform: rotate(1deg);
+}
+
+.rubber-stamp.ambiguous:hover {
+  transform: rotate(2deg) scale(1.06) translateY(-1px);
+}
+
+.rubber-stamp.missing {
+  color: var(--stamp-red);
+  background-color: transparent;
+  border: 2px dashed var(--stamp-red);
+  transform: rotate(-1.5deg);
+}
+
+.rubber-stamp.not_met {
+  color: #fff;
+  background-color: var(--stamp-red);
+  border-color: var(--stamp-red);
+  transform: rotate(2deg);
+}
+
+@keyframes stampLand {
+  0% {
+    transform: scale(1.3) rotate(-8deg);
+    opacity: 0.2;
+  }
+  60% {
+    transform: scale(0.96) rotate(-1deg);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+.rubber-stamp.landing {
+  animation: stampLand 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes stampFlip {
+  0% {
+    transform: perspective(400px) rotateY(0deg) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: perspective(400px) rotateY(90deg) scale(0.85);
+    opacity: 0.15;
+  }
+  55% {
+    transform: perspective(400px) rotateY(90deg) scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: perspective(400px) rotateY(0deg) scale(1) rotate(-2deg);
+    opacity: 1;
+  }
+}
+
+.rubber-stamp.stamp-flip {
+  animation: stampFlip 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Accessible focus styling */
+:focus-visible {
+  outline: 2px solid var(--carbon-blue);
+  outline-offset: 3px;
+  transition: outline-offset 0.1s ease;
+}
+
+/* Global tactile button feedback */
+button:active,
+a:active {
+  transform: scale(0.98);
+}
+
+/* Motion Utilities */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes beaconGlow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(46, 125, 79, 0.4);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 5px rgba(46, 125, 79, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rubber-stamp,
+  .rubber-stamp.landing,
+  .rubber-stamp.stamp-flip {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
