@@ -1,0 +1,212 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 28px;
+  background-color: var(--bg-surface);
+  border-bottom: 1px solid var(--border-rule);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.brandGroup {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  user-select: none;
+}
+
+.logoSvg {
+  width: 32px;
+  height: 32px;
+  color: var(--ink-primary);
+  transition: transform 0.8s cubic-bezier(.22, 1, .36, 1);
+}
+
+.logoMark:hover .logoSvg {
+  transform: rotate(90deg);
+}
+
+.brandTextGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.brandTitle {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  line-height: 1.1;
+}
+
+.brandSubtitle {
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-muted);
+}
+
+.navPills {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--bg-subtle);
+  padding: 4px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border-rule);
+}
+
+.pillLink {
+  background: transparent;
+  border: 0;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.pillLink:hover {
+  color: var(--ink-primary);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.pillLinkActive {
+  background-color: var(--bg-surface);
+  color: var(--ink-primary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.controlsGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.demoToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--border-rule);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.demoLive {
+  background-color: var(--bg-subtle);
+  color: var(--ink-muted);
+}
+
+.demoLive:hover {
+  background-color: #e3d6c6;
+  color: var(--ink-primary);
+}
+
+.demoActive {
+  background-color: var(--stamp-amber-bg);
+  color: var(--stamp-amber);
+  border-color: var(--stamp-amber);
+  box-shadow: 0 0 0 2px rgba(183, 121, 31, 0.2);
+}
+
+.demoDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: transform 0.2s ease;
+}
+
+.badge:hover {
+  transform: scale(1.03);
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: currentColor;
+  animation: beaconGlow 1.8s infinite;
+}
+
+.badgeLive {
+  background-color: var(--stamp-green-bg);
+  color: var(--stamp-green);
+  border: 1px solid var(--stamp-green);
+}
+
+.badgeReplay {
+  background-color: var(--stamp-amber-bg);
+  color: var(--stamp-amber);
+  border: 1px solid var(--stamp-amber);
+}
+
+.logButton,
+.infoButton,
+.themeToggle {
+  padding: 6px 12px;
+  background: var(--bg-surface);
+  color: var(--ink-primary);
+  border: 1px solid var(--border-rule);
+  border-radius: 4px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logButton:hover,
+.infoButton:hover,
+.themeToggle:hover {
+  background-color: var(--bg-subtle);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .tagline {
+    display: none;
+  }
+}
+
