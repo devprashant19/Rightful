@@ -21,6 +21,12 @@ export const runtime = "nodejs";
  * permanently spinning step. Degrading early always beats being killed.
  */
 const PIPELINE_BUDGET_MS = 50_000;
+/**
+ * Last-resort watchdog. The per-step budgets above bound the calls we know
+ * about; this bounds everything else, so no hang anywhere in the pipeline can
+ * leave the client without a terminal event. Must stay under maxDuration.
+ */
+const WATCHDOG_MS = 55_000;
 /** Drafting needs roughly this long; below it, use the deterministic draft. */
 const DRAFT_MIN_BUDGET_MS = 13_000;
 
@@ -84,9 +90,29 @@ export async function POST(req: NextRequest) {
 
   const stream = new ReadableStream({
     async start(controller) {
+      let closed = false;
+
       const emit = (event: NDJSONEvent) => {
+        if (closed) return;
         controller.enqueue(encoder.encode(JSON.stringify(event) + "\n"));
       };
+
+      const close = () => {
+        if (closed) return;
+        closed = true;
+        controller.close();
+      };
+
+      const watchdog = setTimeout(() => {
+        emit({
+          type: "notice",
+          level: "warn",
+          message:
+            "The run exceeded its time budget and was cut short. Partial results above are live and verified; re-run to complete the claim draft.",
+        });
+        emit({ type: "done", mode: "live" });
+        close();
+      }, WATCHDOG_MS);
 
       try {
         // Step 1: Fact Extraction (Nemotron 3 Nano)
@@ -295,7 +321,8 @@ export async function POST(req: NextRequest) {
           });
         }
       } finally {
-        controller.close();
+        clearTimeout(watchdog);
+        close();
       }
     },
   });
