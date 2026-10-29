@@ -8,7 +8,7 @@
 [![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron_3-green.svg)](https://www.nvidia.com)
 [![Tavily Search](https://img.shields.io/badge/Tavily-Live_Research-teal.svg)](https://tavily.com)
 
-**Live Demo:** <!-- DEPLOY-URL --> _(see [Deployment](#deployment) below)_  
+**Live Demo:** [https://rightful-nu.vercel.app](https://rightful-nu.vercel.app)  
 **Repository:** [https://github.com/devprashant19/Rightful](https://github.com/devprashant19/Rightful)
 
 ---
