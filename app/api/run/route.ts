@@ -163,19 +163,36 @@ export async function POST(req: NextRequest) {
         // Step 2 & 3: Research Planning (Nemotron 3 Nano) & Policy Research (Tavily)
         emit({ type: "step", step: "plan_research", status: "running" });
 
-        const planPrompt = buildPlanPrompt(facts);
-        const planResult = await callNemotron<ResearchPlan>({
-          step: "plan_research",
-          model: env.fastModel,
-          maxTokens: 2500,
-          timeoutMs: Math.max(6_000, remainingMs() - RESERVE_AFTER_PLAN_MS),
-          system: PLAN_RESEARCH_SYSTEM,
-          user: planPrompt,
-          json: true,
-          validator: validatePlan,
-        });
+        // When the caller already supplied the policy page, planning search
+        // queries is work we will never use: executePolicyResearch goes
+        // straight to that URL. Spending a model call on it only consumed
+        // budget the evidence matrix needs.
+        let plan: ResearchPlan;
+        let planTokens = { in: 0, out: 0 };
+        let planLatency = 0;
 
-        const plan = planResult.data;
+        if (policyUrl) {
+          plan = {
+            queries: [`${facts.seller.value} official return and warranty policy`],
+            official_domain: facts.seller_domain_guess,
+            policy_types: ["return", "warranty"],
+          };
+        } else {
+          const planPrompt = buildPlanPrompt(facts);
+          const planResult = await callNemotron<ResearchPlan>({
+            step: "plan_research",
+            model: env.fastModel,
+            maxTokens: 2500,
+            timeoutMs: Math.max(6_000, remainingMs() - RESERVE_AFTER_PLAN_MS),
+            system: PLAN_RESEARCH_SYSTEM,
+            user: planPrompt,
+            json: true,
+            validator: validatePlan,
+          });
+          plan = planResult.data;
+          planLatency = planResult.meta.latency_ms;
+          planTokens = { in: planResult.meta.prompt_tokens, out: planResult.meta.completion_tokens };
+        }
 
         const researchStartTime = Date.now();
         const sources = await executePolicyResearch({
@@ -192,12 +209,11 @@ export async function POST(req: NextRequest) {
           type: "step",
           step: "plan_research",
           status: "done",
-          model: "Tavily Search & Extract",
-          latency_ms: planResult.meta.latency_ms + researchLatency,
-          tokens: {
-            in: planResult.meta.prompt_tokens,
-            out: planResult.meta.completion_tokens,
-          },
+          model: policyUrl
+            ? "Tavily Extract (direct policy URL)"
+            : "Nemotron 3 Nano + Tavily Search & Extract",
+          latency_ms: planLatency + researchLatency,
+          tokens: planTokens,
         });
 
         emit({ type: "sources", data: sources });
