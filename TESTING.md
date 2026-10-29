@@ -43,7 +43,7 @@
 - **Output:**
   ```text
   --> Scanning .next/static client bundles for secret leakage...
-  --> Total client bundle files scanned: 22
+  --> Total client bundle files scanned: 24
   [PASS] Zero secrets detected in client bundles.
   ```
 - **Forbidden Patterns Tested:**
