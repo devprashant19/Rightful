@@ -27,8 +27,12 @@ const PIPELINE_BUDGET_MS = 50_000;
  * leave the client without a terminal event. Must stay under maxDuration.
  */
 const WATCHDOG_MS = 55_000;
-/** Drafting needs roughly this long; below it, use the deterministic draft. */
-const DRAFT_MIN_BUDGET_MS = 13_000;
+/**
+ * Drafting needs roughly this long; below it, use the deterministic draft.
+ * Measured at 1.4-8.4s across runs, so 13s reserved more than drafting ever
+ * used and pushed otherwise-healthy runs onto the code fallback.
+ */
+const DRAFT_MIN_BUDGET_MS = 9_000;
 /**
  * Each step is capped by what the *downstream* steps still need, not by a fixed
  * number. Upstream latency varies by an order of magnitude with provider load,
