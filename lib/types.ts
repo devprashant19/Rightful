@@ -125,5 +125,6 @@ export type NDJSONEvent =
   | { type: "verification"; data: VerificationResult }
   | { type: "claim"; data: ClaimDraft }
   | { type: "error"; step: string; message: string; recoverable: boolean }
+  | { type: "notice"; level: "info" | "warn"; message: string }
   | { type: "done"; mode: "live" | "replay" };
 

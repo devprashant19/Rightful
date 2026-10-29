@@ -352,6 +352,8 @@ export default function RightfulDashboard() {
               });
             } else if (event.type === "error") {
               setStreamError(`[${event.step}] ${event.message}`);
+            } else if (event.type === "notice") {
+              setStreamError(event.message);
             }
           } catch (parseErr) {
             console.error("Error parsing NDJSON line:", line, parseErr);
