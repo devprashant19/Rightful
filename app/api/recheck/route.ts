@@ -8,9 +8,15 @@ import { Facts, DocumentInput, PolicySource, Requirement, NDJSONEvent } from "@/
 export const maxDuration = 60;
 export const runtime = "nodejs";
 
+/** Same serverless budget reasoning as /api/run: finish early rather than be killed. */
+const RECHECK_BUDGET_MS = 50_000;
+const DRAFT_MIN_BUDGET_MS = 13_000;
+
 export async function POST(req: NextRequest) {
   const env = getEnv();
   const encoder = new TextEncoder();
+  const recheckStart = Date.now();
+  const remainingMs = () => RECHECK_BUDGET_MS - (Date.now() - recheckStart);
 
   const stream = new ReadableStream({
     async start(controller) {
@@ -63,6 +69,7 @@ Return JSON { "requirements": [...] }`;
           const modelRes = await callNemotron<{ requirements: Requirement[] }>({
             step: "evidence_matrix",
             model: env.reasonModel,
+            timeoutMs: Math.max(0, remainingMs() - DRAFT_MIN_BUDGET_MS),
             system:
               "You are a legal evidence analyst. Update only the specified requirements using the new document.",
             user: recheckPrompt,
@@ -121,6 +128,7 @@ Return JSON { "requirements": [...] }`;
           const draftRes = await callNemotron<any>({
             step: "draft_claim",
             model: env.fastModel,
+            timeoutMs: Math.max(0, remainingMs()),
             system: "Draft an updated claim letter reflecting the newly provided proof.",
             user: draftPrompt,
             json: true,

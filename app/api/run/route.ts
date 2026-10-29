@@ -14,6 +14,16 @@ import { DocumentInput, Facts, NDJSONEvent, Requirement, ClaimDraft } from "@/li
 export const maxDuration = 60;
 export const runtime = "nodejs";
 
+/**
+ * Serverless wall clock is maxDuration (60s on Vercel Hobby). Finish inside a
+ * tighter budget than that: if the function is killed mid-stream the client
+ * receives a truncated NDJSON body with no terminal event, which renders as a
+ * permanently spinning step. Degrading early always beats being killed.
+ */
+const PIPELINE_BUDGET_MS = 50_000;
+/** Drafting needs roughly this long; below it, use the deterministic draft. */
+const DRAFT_MIN_BUDGET_MS = 13_000;
+
 export async function POST(req: NextRequest) {
   const env = getEnv();
   const encoder = new TextEncoder();
@@ -69,6 +79,9 @@ export async function POST(req: NextRequest) {
   // 3. Live Agent Pipeline Execution
   const { documents, problem, seller, policyUrl } = body;
 
+  const pipelineStart = Date.now();
+  const remainingMs = () => PIPELINE_BUDGET_MS - (Date.now() - pipelineStart);
+
   const stream = new ReadableStream({
     async start(controller) {
       const emit = (event: NDJSONEvent) => {
@@ -83,6 +96,7 @@ export async function POST(req: NextRequest) {
         const extractResult = await callNemotron<Facts>({
           step: "extract_facts",
           model: env.fastModel,
+          timeoutMs: Math.min(20_000, remainingMs()),
           system: EXTRACT_FACTS_SYSTEM,
           user: extractPrompt,
           json: true,
@@ -112,6 +126,7 @@ export async function POST(req: NextRequest) {
         const planResult = await callNemotron<ResearchPlan>({
           step: "plan_research",
           model: env.fastModel,
+          timeoutMs: Math.min(15_000, remainingMs()),
           system: PLAN_RESEARCH_SYSTEM,
           user: planPrompt,
           json: true,
@@ -151,6 +166,7 @@ export async function POST(req: NextRequest) {
         const matrixResult = await callNemotron<{ requirements: Requirement[]; summary: string }>({
           step: "evidence_matrix",
           model: env.reasonModel,
+          timeoutMs: Math.max(0, remainingMs() - DRAFT_MIN_BUDGET_MS),
           system: MATRIX_SYSTEM_PROMPT,
           user: matrixPrompt,
           json: true,
@@ -196,10 +212,16 @@ export async function POST(req: NextRequest) {
 
         let claimDraft: ClaimDraft;
         try {
+          if (remainingMs() < DRAFT_MIN_BUDGET_MS) {
+            throw new Error(
+              `Insufficient time budget for model drafting (${remainingMs()}ms left); using deterministic draft.`
+            );
+          }
           const draftPrompt = buildDraftPrompt(facts, verificationResult.requirements, sources);
           const draftResult = await callNemotron<ClaimDraft>({
             step: "draft_claim",
             model: env.fastModel,
+            timeoutMs: Math.max(0, remainingMs()),
             system: DRAFT_SYSTEM_PROMPT,
             user: draftPrompt,
             json: true,
@@ -252,6 +274,14 @@ export async function POST(req: NextRequest) {
         emit({ type: "done", mode: "live" });
       } catch (err: any) {
         console.warn("Live pipeline encountered an issue, executing graceful fallback stream:", err.message);
+        // Say so in the stream. Silently substituting the pre-recorded trace
+        // makes a failed live run look like a successful one, which hides real
+        // breakage from us and misrepresents the run to anyone inspecting it.
+        emit({
+          type: "notice",
+          level: "warn",
+          message: `Live inference did not complete (${err.message}). Showing the pre-verified reference trace instead.`,
+        });
         try {
           for await (const event of streamReplayEvents()) {
             emit(event);
