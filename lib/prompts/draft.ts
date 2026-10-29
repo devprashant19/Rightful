@@ -24,7 +24,8 @@ STRICT CONSTRAINTS:
     "description": string
   },
   "missing": string[]
-}`;
+}
+7. Output the JSON minified on a single line: no pretty-printing, no markdown fences, and nothing whatsoever after the closing brace.`;
 
 export function buildDraftPrompt(facts: Facts, verifiedReqs: VerifiedRequirement[], sources: PolicySource[]): string {
   const verifiedTerms = verifiedReqs

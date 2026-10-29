@@ -14,7 +14,8 @@ RULES:
 4. window_days & window_start: If the requirement specifies a time window, return window_days (integer) and window_start ("purchase" | "delivery"). Otherwise null.
 5. doc_ids & source_ids: List the exact citation IDs (e.g. ["D1"], ["S1"]).
 6. ask_user: If missing or ambiguous, provide one clear instruction on what evidence to provide.
-7. Output ONLY a valid JSON object matching { "requirements": [...], "summary": string }.`;
+7. Output ONLY a valid JSON object matching { "requirements": [...], "summary": string }.
+8. Output the JSON minified on a single line: no pretty-printing, no markdown fences, and nothing whatsoever after the closing brace.`;
 
 export function buildMatrixPrompt(facts: Facts, docs: DocumentInput[], sources: PolicySource[]): string {
   const formattedDocs = docs

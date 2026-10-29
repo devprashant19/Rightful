@@ -12,7 +12,8 @@ RULES:
 1. Generate between 2 and 3 queries max.
 2. Queries must name the seller, product category, and specific policy needed (e.g. "Apple return policy electronics days US").
 3. Determine official_domain if identifiable (e.g. "apple.com", "bestbuy.com", "zara.com").
-4. Return ONLY a valid JSON object matching the schema.`;
+4. Return ONLY a valid JSON object matching the schema.
+5. Output the JSON minified on a single line: no pretty-printing, no markdown fences, and nothing whatsoever after the closing brace.`;
 
 export function buildPlanPrompt(facts: Facts): string {
   return `SELLER: ${facts.seller.value}
