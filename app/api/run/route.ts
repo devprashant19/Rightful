@@ -289,7 +289,11 @@ export async function POST(req: NextRequest) {
             system: DRAFT_SYSTEM_PROMPT,
             user: draftPrompt,
             json: true,
-            maxTokens: 3000,
+            // Drafting emits prose, not just field values, and is the only step
+            // that also pays for reasoning tokens before the JSON. At 3000 it
+            // was truncated mid-<think> on every attempt, leaving no JSON to
+            // parse and pushing all five deployed runs onto the code fallback.
+            maxTokens: 6000,
             validator: validateDraft,
           });
 
