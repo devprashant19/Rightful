@@ -127,7 +127,7 @@ export function ProofLedger({
                     <div className={styles.quoteBox}>
                       <span className={styles.quoteLabel}>VERBATIM POLICY QUOTE:</span>
                       <blockquote className={styles.quoteText}>
-                        "{req.policy_quote}"
+                        &ldquo;{req.policy_quote}&rdquo;
                       </blockquote>
                     </div>
                   )}

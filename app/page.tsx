@@ -449,7 +449,7 @@ export default function RightfulDashboard() {
               <div className={styles.studioPromptBox}>
                 <div className={styles.studioPromptLabel}>Your Case • Consumer Evidence</div>
                 <div className={styles.studioPromptText}>
-                  "AeroSound Pro Earbuds delivered October 12, 2026. Charging case stopped holding charge after 19 days. Customer service claimed all audio sales are final."
+                  &ldquo;AeroSound Pro Earbuds delivered October 12, 2026. Charging case stopped holding charge after 19 days. Customer service claimed all audio sales are final.&rdquo;
                 </div>
               </div>
 

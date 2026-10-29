@@ -113,7 +113,7 @@ function ClaimPackContent() {
                 </td>
                 <td>
                   {r.policy_quote ? (
-                    <span className={styles.quoteMono}>"{r.policy_quote}"</span>
+                    <span className={styles.quoteMono}>&ldquo;{r.policy_quote}&rdquo;</span>
                   ) : (
                     <span style={{ color: "var(--ink-faint)", fontStyle: "italic" }}>
                       No quote required
