@@ -8,8 +8,8 @@
 [![NVIDIA Nemotron](https://img.shields.io/badge/NVIDIA-Nemotron_3-green.svg)](https://www.nvidia.com)
 [![Tavily Search](https://img.shields.io/badge/Tavily-Live_Research-teal.svg)](https://tavily.com)
 
-**Live Demo:** [https://rightful.vercel.app](https://rightful.vercel.app)  
-**Target Repository:** [https://github.com/devprashant19/Rightful](https://github.com/devprashant19/Rightful)
+**Live Demo:** <!-- DEPLOY-URL --> _(see [Deployment](#deployment) below)_  
+**Repository:** [https://github.com/devprashant19/Rightful](https://github.com/devprashant19/Rightful)
 
 ---
 
@@ -114,6 +114,40 @@ node scripts/smoke.mjs
 # 5. Start development server
 npm run dev
 ```
+
+---
+
+## Deployment
+
+The app is a standard Next.js 15 project and deploys with zero extra configuration.
+
+```bash
+npm i -g vercel
+vercel login
+vercel --prod
+```
+
+Set these environment variables on the host before the first production request,
+otherwise `/api/run` serves the pre-verified replay trace instead of live inference:
+
+| Variable | Required | Notes |
+| :--- | :--- | :--- |
+| `NEBIUS_API_KEY` | yes | Nebius Token Factory key; without it the pipeline cannot reach Nemotron |
+| `TAVILY_API_KEY` | yes | Tavily Search & Extract key |
+| `NEBIUS_BASE_URL` | no | Defaults to `https://api.tokenfactory.nebius.com/v1` |
+| `NEMOTRON_FAST_MODEL` | no | Defaults to `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` |
+| `NEMOTRON_REASON_MODEL` | no | Defaults to `nvidia/nemotron-3-super-120b-a12b` |
+| `JUDGE_ACCESS_CODE` | no | Defaults to `RIGHTFUL2026_JUDGE_PASS` |
+
+Confirm a deployment is live and wired to real inference:
+
+```bash
+curl https://<your-deployment>/api/health
+# expect: "live_mode": true, and both services true
+```
+
+`maxDuration` on `/api/run` is set to 60s to accommodate the Nemotron Super
+reasoning step; the route runs on the Node.js runtime, not Edge.
 
 ---
 
