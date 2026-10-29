@@ -274,6 +274,7 @@ export async function POST(req: NextRequest) {
         emit({ type: "step", step: "draft_claim", status: "running" });
 
         let claimDraft: ClaimDraft;
+        const draftStartedAt = Date.now();
         try {
           if (remainingMs() < DRAFT_MIN_BUDGET_MS) {
             throw new Error(
@@ -323,12 +324,21 @@ export async function POST(req: NextRequest) {
               .filter((r) => r.final_status === "missing")
               .map((r) => r.ask_user || r.requirement),
           };
+          // Report what actually happened. A hardcoded 50ms here claimed an
+          // instant deterministic draft even when a model attempt had just
+          // consumed 25s before failing, which made the run log misleading
+          // about where the time went.
           emit({
             type: "step",
             step: "draft_claim",
             status: "done",
-            model: "Rightful Fallback Generator",
-            latency_ms: 50,
+            model: "Deterministic Draft (code fallback)",
+            latency_ms: Date.now() - draftStartedAt,
+          });
+          emit({
+            type: "notice",
+            level: "warn",
+            message: `Claim drafted deterministically rather than by Nemotron: ${draftErr.message}`,
           });
         }
 
