@@ -203,7 +203,7 @@ export async function POST(req: NextRequest) {
             system: DRAFT_SYSTEM_PROMPT,
             user: draftPrompt,
             json: true,
-            maxTokens: 1500,
+            maxTokens: 3000,
             validator: validateDraft,
           });
 
