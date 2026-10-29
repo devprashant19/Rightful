@@ -29,6 +29,14 @@ const PIPELINE_BUDGET_MS = 50_000;
 const WATCHDOG_MS = 55_000;
 /** Drafting needs roughly this long; below it, use the deterministic draft. */
 const DRAFT_MIN_BUDGET_MS = 13_000;
+/**
+ * Each step is capped by what the *downstream* steps still need, not by a fixed
+ * number. Upstream latency varies by an order of magnitude with provider load,
+ * and a fixed cap aborts calls that would have succeeded while still not
+ * guaranteeing the run fits. The watchdog is what guarantees termination.
+ */
+const RESERVE_AFTER_EXTRACT_MS = 26_000;
+const RESERVE_AFTER_PLAN_MS = 20_000;
 
 export async function POST(req: NextRequest) {
   const env = getEnv();
@@ -122,7 +130,8 @@ export async function POST(req: NextRequest) {
         const extractResult = await callNemotron<Facts>({
           step: "extract_facts",
           model: env.fastModel,
-          timeoutMs: Math.min(20_000, remainingMs()),
+          maxTokens: 4000,
+          timeoutMs: Math.max(8_000, remainingMs() - RESERVE_AFTER_EXTRACT_MS),
           system: EXTRACT_FACTS_SYSTEM,
           user: extractPrompt,
           json: true,
@@ -130,6 +139,12 @@ export async function POST(req: NextRequest) {
         });
 
         const facts = extractResult.data;
+
+        // Code has final authority over the model: the caller-supplied seller
+        // hint is ground truth, so fill it in when no document named the seller.
+        if (!facts.seller?.value && seller) {
+          facts.seller = { value: seller, doc_id: "" };
+        }
 
         emit({
           type: "step",
@@ -152,7 +167,8 @@ export async function POST(req: NextRequest) {
         const planResult = await callNemotron<ResearchPlan>({
           step: "plan_research",
           model: env.fastModel,
-          timeoutMs: Math.min(15_000, remainingMs()),
+          maxTokens: 2500,
+          timeoutMs: Math.max(6_000, remainingMs() - RESERVE_AFTER_PLAN_MS),
           system: PLAN_RESEARCH_SYSTEM,
           user: planPrompt,
           json: true,
@@ -192,11 +208,11 @@ export async function POST(req: NextRequest) {
         const matrixResult = await callNemotron<{ requirements: Requirement[]; summary: string }>({
           step: "evidence_matrix",
           model: env.reasonModel,
-          timeoutMs: Math.max(0, remainingMs() - DRAFT_MIN_BUDGET_MS),
+          timeoutMs: Math.max(8_000, remainingMs() - DRAFT_MIN_BUDGET_MS),
           system: MATRIX_SYSTEM_PROMPT,
           user: matrixPrompt,
           json: true,
-          maxTokens: 2500,
+          maxTokens: 4000,
           validator: validateMatrix,
         });
 

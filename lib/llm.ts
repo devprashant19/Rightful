@@ -230,6 +230,11 @@ export async function callNemotron<T>(options: LlmCallOptions): Promise<LlmCallR
       };
     } catch (parseErr: any) {
       lastError = parseErr;
+      // Attempt-level visibility: without this, a step that burns every attempt
+      // is indistinguishable from a slow one in the logs.
+      console.warn(
+        `[${options.step}] attempt ${attempt}/${MAX_ATTEMPTS} rejected: ${parseErr.message} | finish=${apiResponse.choices?.[0]?.finish_reason} out_tokens=${apiResponse.usage?.completion_tokens} head=${JSON.stringify(stripThinkingTags(rawContent).slice(0, 160))}`
+      );
       if (budgetMs - (Date.now() - startTime) <= 2000) break;
     }
   }
