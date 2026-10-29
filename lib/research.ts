@@ -115,7 +115,7 @@ Original retail packaging is encouraged but is not required for verified warrant
   }
 
   // Priority 2: Targeted domain search if official domain is known
-  let searchResults: TavilySearchResult[] = [];
+  const searchResults: TavilySearchResult[] = [];
   if (options.officialDomain) {
     try {
       const targeted = await tavilySearch(options.queries[0], {
