@@ -17,7 +17,7 @@
 Every year, billions of dollars in legitimate consumer refunds, return requests, and warranty claims are forfeited because merchant return policies are intentionally dense, fragmented, and buried in legal jargon. When products fail or shipments go wrong, consumers rarely know their exact legal deadlines or how to cite policy terms effectively to customer service agents.
 
 ## The Solution: What Rightful Does
-Rightful turns an order receipt and a one-line complaint into an airtight, evidence-backed claim in under 30 seconds:
+Rightful turns an order receipt and a one-line complaint into an airtight, evidence-backed claim in under a minute:
 1. **Reads messy purchase documents** (.txt, .eml email headers, PDF receipts) using **NVIDIA Nemotron 3 Nano**.
 2. **Researches live seller policies** from official web pages using **Tavily Search & Extract**.
 3. **Maps requirements in a Proof Ledger** with **Nemotron 3 Super (120B)**, stamping each requirement `Supported`, `Ambiguous`, `Missing`, or `Not Met`.
@@ -84,12 +84,15 @@ Large Language Models frequently hallucinate policy terms. Rightful solves this 
 
 To ensure free, unrestricted testing during the judging period:
 1. Navigate to the live deployment or local app (`http://localhost:3000`).
-2. Enter the **Judge Access Code** in the footer:
-   ```
-   RIGHTFUL2026_JUDGE_PASS
-   ```
-3. This code bypasses all IP rate limits (10 runs / 10 minutes) and forced replay modes, executing 100% live calls to Nebius Token Factory and Tavily Search & Extract.
-4. Select the sample case: **"Voltline Earbuds (Fictional - Benchmark)"** or try any of the live retail scenarios.
+2. Enter the **Judge Access Code** in the footer. The code is supplied in the
+   *testing instructions* field of this project's Devpost submission; it is
+   deliberately not published here, because it bypasses the rate limiter and
+   this repository is public.
+3. This code bypasses the IP rate limit (10 runs / 10 minutes) and any forced
+   replay mode, executing live calls to Nebius Token Factory and Tavily.
+4. Select the sample case **"Voltline Earbuds (Fictional - Benchmark)"**. It is
+   the fastest and most deterministic path, resolving its policy from an
+   embedded document rather than a live search.
 5. Click **Build my claim** and observe the live streaming pipeline, Proof Ledger rubber stamps, and model telemetry in the **Run Log Drawer**.
 
 ---
@@ -137,7 +140,7 @@ otherwise `/api/run` serves the pre-verified replay trace instead of live infere
 | `NEBIUS_BASE_URL` | no | Defaults to `https://api.tokenfactory.nebius.com/v1` |
 | `NEMOTRON_FAST_MODEL` | no | Defaults to `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` |
 | `NEMOTRON_REASON_MODEL` | no | Defaults to `nvidia/nemotron-3-super-120b-a12b` |
-| `JUDGE_ACCESS_CODE` | no | Defaults to `RIGHTFUL2026_JUDGE_PASS` |
+| `JUDGE_ACCESS_CODE` | recommended | Set a private value in production. The committed default in `.env.example` is for local development only. |
 
 Confirm a deployment is live and wired to real inference:
 
