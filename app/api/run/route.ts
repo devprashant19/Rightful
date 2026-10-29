@@ -183,6 +183,7 @@ export async function POST(req: NextRequest) {
           officialDomain: plan.official_domain || facts.seller_domain_guess,
           sellerName: facts.seller.value,
           directPolicyUrl: policyUrl || undefined,
+          budgetMs: Math.max(8_000, remainingMs() - RESERVE_AFTER_PLAN_MS),
         });
 
         const researchLatency = Date.now() - researchStartTime;

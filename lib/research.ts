@@ -6,6 +6,13 @@ export interface ResearchOptions {
   officialDomain: string | null;
   sellerName: string;
   directPolicyUrl?: string | null;
+  /**
+   * Ceiling for the whole research step. Each Tavily call is capped at 20s
+   * individually, but this runs up to five of them sequentially (one extract,
+   * a targeted search, one search per query, then a final extract), so the
+   * aggregate reached ~100s and blew the serverless limit on its own.
+   */
+  budgetMs?: number;
 }
 
 /**
@@ -57,6 +64,11 @@ export function rankAndDedupeUrls(
 
 export async function executePolicyResearch(options: ResearchOptions): Promise<PolicySource[]> {
   const sources: PolicySource[] = [];
+  const startedAt = Date.now();
+  const budgetMs = options.budgetMs ?? 30_000;
+  // Leave room for the final extract, which is what turns URLs into quotable text.
+  const hasTimeForSearch = () => Date.now() - startedAt < budgetMs * 0.6;
+  const hasTimeForExtract = () => Date.now() - startedAt < budgetMs;
 
   // Priority 1: User or Benchmark supplied direct policy URL
   if (options.directPolicyUrl && options.directPolicyUrl.trim()) {
@@ -116,7 +128,7 @@ Original retail packaging is encouraged but is not required for verified warrant
 
   // Priority 2: Targeted domain search if official domain is known
   const searchResults: TavilySearchResult[] = [];
-  if (options.officialDomain) {
+  if (options.officialDomain && hasTimeForSearch()) {
     try {
       const targeted = await tavilySearch(options.queries[0], {
         include_domains: [options.officialDomain],
@@ -130,6 +142,9 @@ Original retail packaging is encouraged but is not required for verified warrant
 
   // Priority 3: Broad queries
   for (const q of options.queries) {
+    // Stop issuing searches once the budget is spent; a ranked result from
+    // fewer queries beats overrunning the function and returning nothing.
+    if (!hasTimeForSearch()) break;
     try {
       const res = await tavilySearch(q, { max_results: 3 });
       searchResults.push(...res);
@@ -139,7 +154,7 @@ Original retail packaging is encouraged but is not required for verified warrant
   }
 
   const topUrls = rankAndDedupeUrls(searchResults, options.officialDomain, options.sellerName);
-  if (topUrls.length === 0) return [];
+  if (topUrls.length === 0 || !hasTimeForExtract()) return [];
 
   // Priority 4: Extract clean page text from top ranked URLs
   try {
