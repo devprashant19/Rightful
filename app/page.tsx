@@ -17,6 +17,7 @@ import { RunLogDrawer } from "@/components/RunLogDrawer";
 import { HowItWorksModal } from "@/components/HowItWorksModal";
 import { DocumentViewerModal } from "@/components/DocumentViewerModal";
 import { Footer } from "@/components/Footer";
+import { JudgeBanner } from "@/components/JudgeBanner";
 import { TestCase, SAMPLE_CASES } from "@/lib/cases";
 import {
   MOCK_FACTS,
@@ -381,6 +382,8 @@ export default function RightfulDashboard() {
         isDemoMode={isDemoMode}
         onToggleDemoMode={() => setIsDemoMode((prev) => !prev)}
       />
+
+      <JudgeBanner />
 
       {isDemoMode && (
         <div className={styles.demoBanner}>

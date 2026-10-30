@@ -1,0 +1,153 @@
+.banner {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin: 0 auto 20px;
+  max-width: 1180px;
+  padding: 14px 20px;
+  border: 1.5px solid var(--accent-gold);
+  border-left-width: 5px;
+  border-radius: 12px;
+  background: var(--accent-gold-bg);
+  box-shadow: var(--shadow-sm);
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 0.94rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  letter-spacing: -0.01em;
+}
+
+.pip {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  flex-shrink: 0;
+}
+
+.hint {
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.input {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 9px 13px;
+  min-width: 268px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--bg-surface);
+  color: var(--ink-primary);
+}
+
+.input:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 1px;
+  border-color: var(--accent-gold);
+}
+
+.btn {
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 600;
+  padding: 9px 18px;
+  border: none;
+  border-radius: 8px;
+  background: var(--carbon-blue);
+  color: var(--bg-paper);
+  cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+
+.btn:hover {
+  background: var(--carbon-hover);
+}
+
+.dismiss {
+  background: none;
+  border: none;
+  color: var(--ink-faint);
+  font-size: 1.15rem;
+  line-height: 1;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.dismiss:hover {
+  color: var(--ink-primary);
+  background: rgba(42, 26, 18, 0.06);
+}
+
+/* Active state once a code is stored */
+.active {
+  border-color: var(--stamp-green);
+  background: var(--stamp-green-bg);
+}
+
+.active .pip {
+  background: var(--stamp-green);
+}
+
+.activeText {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--stamp-green);
+}
+
+.clear {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: auto;
+  padding: 4px;
+}
+
+@media (max-width: 760px) {
+  .banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .form {
+    margin-left: 0;
+    flex-wrap: wrap;
+  }
+
+  .input {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .dismiss {
+    position: absolute;
+    right: 14px;
+    top: 10px;
+  }
+
+  .banner {
+    position: relative;
+  }
+}
