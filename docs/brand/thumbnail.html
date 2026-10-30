@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{width:1200px;height:800px;overflow:hidden}
+  body{
+    background:#f6f0e7;
+    font-family:'Inter Tight',system-ui,sans-serif;
+    color:#2a1a12;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:96px 104px;position:relative;
+  }
+  .rule{position:absolute;left:0;top:0;width:100%;height:10px;background:#d4612f}
+  .brand{display:flex;align-items:center;gap:26px;margin-bottom:54px}
+  .brand svg{width:84px;height:84px;fill:#2a1a12}
+  .wordmark{font-weight:700;font-size:62px;letter-spacing:-0.03em;line-height:1}
+  .sub{font-size:17px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:#5b4a3f;margin-top:8px}
+  h1{font-size:67px;font-weight:400;line-height:1.1;letter-spacing:-0.025em;max-width:980px}
+  h1 b{font-weight:700}
+  .gold{color:#d4612f}
+  .tag{font-size:25px;color:#5b4a3f;margin-top:34px;font-weight:400;line-height:1.45;max-width:900px}
+  .foot{position:absolute;left:104px;right:104px;bottom:72px;display:flex;justify-content:space-between;
+        align-items:flex-end;font-family:'Fragment Mono',monospace;font-size:16px;color:#8d7b6f}
+  .chips{display:flex;gap:10px}
+  .chip{border:1px solid rgba(42,26,18,.22);border-radius:999px;padding:7px 15px;color:#5b4a3f;
+        font-family:'Fragment Mono',monospace;font-size:14px;background:rgba(236,227,215,.6)}
+  .stamp{position:absolute;right:92px;top:148px;transform:rotate(-7deg);
+         border:3px solid #2e7d4f;color:#2e7d4f;border-radius:7px;padding:13px 21px;
+         font-family:'Fragment Mono',monospace;font-size:21px;letter-spacing:.1em;
+         background:#eaf5ee;box-shadow:0 2px 5px rgba(42,26,18,.14)}
+</style></head><body>
+  <div class="rule"></div>
+  <div class="brand">
+    <svg viewBox="0 0 40 40"><path d="M5 5h13v13H5zM22 22h13v13H22z"/><path d="M22 5a13 13 0 0 1 13 13H22zM18 35A13 13 0 0 1 5 22h13z"/></svg>
+    <div><div class="wordmark">RIGHTFUL</div><div class="sub">Evidence-Backed Claims Agent</div></div>
+  </div>
+  <div class="stamp">SUPPORTED</div>
+  <h1>Nemotron proposes.<br><b class="gold">Code decides.</b></h1>
+  <div class="tag">Every cited policy quote must exist verbatim in the retrieved page &mdash; or the row is downgraded automatically.</div>
+  <div class="foot">
+    <div class="chips">
+      <span class="chip">NVIDIA Nemotron</span>
+      <span class="chip">Nebius Token Factory</span>
+      <span class="chip">Tavily</span>
+    </div>
+    <div>rightful-nu.vercel.app</div>
+  </div>
+</body></html>
