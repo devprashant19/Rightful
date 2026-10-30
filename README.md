@@ -154,6 +154,12 @@ reasoning step; the route runs on the Node.js runtime, not Edge.
 
 ---
 
+## License
+
+MIT — see [`LICENSE`](LICENSE). Free to use, modify and distribute with attribution.
+
+---
+
 ## Limitations, Ethics & Privacy
 - **Zero Real Submissions:** Rightful never submits claims directly to external companies without permission. Actions are restricted to the local `/portal` sandbox.
 - **Zero Document Storage:** User documents and receipts are processed in memory per request and discarded immediately. No database is used; history persists only in the user's browser `localStorage`.

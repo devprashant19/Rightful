@@ -33,3 +33,7 @@ video/stills/
 video/captures/
 video/vo/lines/
 video/rightful-film/out/
+
+# Demo film working docs (kept locally, not shipped to judges)
+video/
+Rightful-Submission.zip
